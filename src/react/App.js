@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { channels } from '../shared/constants';
+import ButtonAppBar from './Toolbar/Toolbar';
 import Button from '@material-ui/core/Button';
 const { ipcRenderer } = window;
 
@@ -19,7 +20,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
+      <div>
+        <ButtonAppBar></ButtonAppBar>
         <Button variant="contained" color="primary" onClick={() => console.log('asd')}>
           Hello World
         </Button>
