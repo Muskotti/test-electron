@@ -12,17 +12,29 @@ function createWindow() {
     slashes: true,
   });
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1024,
+    height: 728,
+    minWidth: 600,
+    minHeight: 300,
+    darkTheme: true,
+    backgroundColor: '#2e2c29',
     webPreferences: {
+      nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js'),
     },
+    show: false,
+    frame: false,
+  });
+  mainWindow.on('ready-to-show', () => {
+    mainWindow.show();
+    mainWindow.focus();
+    mainWindow.show();
+    mainWindow.webContents.openDevTools({ mode: 'undocked' });
   });
   mainWindow.loadURL(startUrl);
   mainWindow.on('closed', function () {
     mainWindow = null;
   });
-  console.log(mainWindow)
 }
 
 app.on('ready', createWindow);
