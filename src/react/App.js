@@ -1,33 +1,23 @@
 import React from 'react';
 import './App.css';
-import { channels } from '../shared/constants';
 import ButtonAppBar from './Toolbar/Toolbar';
-import Button from '@material-ui/core/Button';
-const { ipcRenderer } = window;
+import { BrowserRouter, } from "react-router-dom";
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      appName: '',
-      appVersion: '',
-    };
-    ipcRenderer.send(channels.APP_INFO);
-    ipcRenderer.on(channels.APP_INFO, (event, arg) => {
-      ipcRenderer.removeAllListeners(channels.APP_INFO);
-    });
-  }
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark',
+  },
+});
 
-  render() {
-    return (
-      <div>
+export default function App() {
+
+  return (
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
         <ButtonAppBar></ButtonAppBar>
-        <Button variant="contained" color="primary" onClick={() => console.log('asd')}>
-          Hello World
-        </Button>
-      </div>
-    );
-  }
-}
+      </BrowserRouter>
+    </ThemeProvider>
+  );
 
-export default App;
+}

@@ -1,36 +1,62 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import { IconButton, Button, Typography, Toolbar, AppBar } from '@material-ui/core';
+import {
+  IconButton,
+  Toolbar,
+  AppBar,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+} from '@material-ui/core';
+import {
+  Link
+} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
+  appBar: {
+    top: 'auto',
+    bottom: 0,
   },
 }));
 
 export default function ButtonAppBar() {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  const list = () => (
+    <List component="nav">
+      {['test'].map((text, index) => (
+        <ListItem button key={text} component={Link} to={text}>
+          <ListItemText primary="Trash" />
+        </ListItem>
+      ))}
+    </List>
+  )
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
+    <div>
+      <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <IconButton onClick={handleDrawerOpen} edge="start" color="inherit" aria-label="menu">
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            News
-          </Typography>
-          <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
+      <Drawer open={open} onClose={handleDrawerClose}>
+        <div style={{marginTop: 30}}>
+          {list()}
+        </div>
+      </Drawer>
     </div>
   );
 }
